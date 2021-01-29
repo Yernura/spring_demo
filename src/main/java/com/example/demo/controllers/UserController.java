@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,17 +36,20 @@ public class UserController {
     private CategoryRepository categoryRepository;
 
     @GetMapping("/categories")
-    public MappingJacksonValue getAllCategories(){
+    public ResponseEntity<MappingJacksonValue> getAllCategories(){
         SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("filters","products");
         FilterProvider filterProvider = new SimpleFilterProvider().addFilter("categoryFilter", simpleBeanPropertyFilter);
         List<Category> list = categoryRepository.findAll();
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(list);
         mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+        return ResponseEntity.ok()
+                .header("Custom-Header", "foo")
+                .body(mappingJacksonValue);
+
     }
 
     @GetMapping("/category/{id}")
-    public MappingJacksonValue getCategoryProducts(@PathVariable Long id){
+    public ResponseEntity<MappingJacksonValue> getCategoryProducts(@PathVariable Long id){
         SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("category","filters");
         FilterProvider filterProvider = new SimpleFilterProvider().addFilter("productFilter", simpleBeanPropertyFilter);
         Category category = categoryRepository.findById(id).get();
@@ -54,11 +58,13 @@ public class UserController {
 
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(list);
         mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+        return ResponseEntity.ok()
+                .header("Custom-Header", "foo")
+                .body(mappingJacksonValue);
     }
 
     @GetMapping("/category/filters/{id}")
-    public MappingJacksonValue getCategoryFilters(@PathVariable Long id) throws JsonProcessingException {
+    public ResponseEntity<MappingJacksonValue> getCategoryFilters(@PathVariable Long id) throws JsonProcessingException {
         SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("category");
         FilterProvider filterProvider = new SimpleFilterProvider().addFilter("filterFilter", simpleBeanPropertyFilter);
         Category category = categoryRepository.findById(id).get();
@@ -67,11 +73,13 @@ public class UserController {
 
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(list);
         mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+        return ResponseEntity.ok()
+                .header("Custom-Header", "foo")
+                .body(mappingJacksonValue);
     }
 
     @GetMapping("/category/{id}/{filter}")
-    public MappingJacksonValue getFilteredProducts(@PathVariable Long id,@PathVariable String filter){
+    public ResponseEntity<MappingJacksonValue> getFilteredProducts(@PathVariable Long id,@PathVariable String filter){
         SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("category");
         FilterProvider filterProvider = new SimpleFilterProvider().addFilter("productFilter", simpleBeanPropertyFilter);
         Category category = categoryRepository.findById(id).get();
@@ -99,7 +107,9 @@ public class UserController {
         }
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(list);
         mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+        return ResponseEntity.ok()
+                .header("Custom-Header", "foo")
+                .body(mappingJacksonValue);
     }
 
 }
