@@ -1,80 +1,270 @@
 FORMAT: 1A
-HOST: https://polls.apiblueprint.org/
+HOST: http://localhost:8080/demo/
 
 # demo_spring_api
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+API for test task. Spring boot is used for creation.
+Author: Yernur Alimkhanov
 
-## Questions Collection [/questions]
+## Request Categories [/categories]
 
-### List All Questions [GET]
+### List All Categories [GET]
 
 + Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
+    [
+  {
+    "id": 7,
+    "name": "Унитазы",
+    "childCategories": []
+  },
+  {
+    "id": 2,
+    "name": "Мебель",
+    "childCategories": [
+      {
+        "id": 5,
+        "name": "Кухня,Ванная",
+        "childCategories": [
+          {
+            "id": 9,
+            "name": "Мебель_для_ванной",
+            "childCategories": []
+          }
         ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Сантехника",
+    "childCategories": [
+      {
+        "id": 6,
+        "name": "Ванны",
+        "childCategories": []
+      },
+      {
+        "id": 7,
+        "name": "Унитазы",
+        "childCategories": []
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Электрика",
+    "childCategories": [
+      {
+        "id": 8,
+        "name": "Розетки",
+        "childCategories": []
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Ванны",
+    "childCategories": []
+  },
+  {
+    "id": 8,
+    "name": "Розетки",
+    "childCategories": []
+  },
+  {
+    "id": 1,
+    "name": "Стройтельство_и_ремонт",
+    "childCategories": [
+      {
+        "id": 3,
+        "name": "Сантехника",
+        "childCategories": [
+          {
+            "id": 6,
+            "name": "Ванны",
+            "childCategories": []
+          },
+          {
+            "id": 7,
+            "name": "Унитазы",
+            "childCategories": []
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Электрика",
+        "childCategories": [
+          {
+            "id": 8,
+            "name": "Розетки",
+            "childCategories": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Кухня,Ванная",
+    "childCategories": [
+      {
+        "id": 9,
+        "name": "Мебель_для_ванной",
+        "childCategories": []
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Мебель_для_ванной",
+    "childCategories": []
+  }
+]
 
-### Create a New Question [POST]
+## Request Product [/category/7]
+This section of API returns all products from particular category. 
+URL pattern of this request "/category/{id}".
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### List Products of Category [GET]
 
-+ Request (application/json)
++ Response 200 (application/json)
+[
+  {
+    "id": 3,
+    "name": "Компакт JUST 031",
+    "price": 28913,
+    "brand": "Cersanit",
+    "features": [
+      {
+        "id": 9,
+        "name": "Материал",
+        "value": "Фарфор"
+      },
+      {
+        "id": 8,
+        "name": "Тип",
+        "value": "Инсталляции"
+      },
+      {
+        "id": 7,
+        "name": "Тип_переключения",
+        "value": "двухрежимный"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Solido 4 в 1",
+    "price": 165000,
+    "brand": "GROHE",
+    "features": [
+      {
+        "id": 12,
+        "name": "Материал",
+        "value": "Дюропласт"
+      },
+      {
+        "id": 10,
+        "name": "Тип_переключения",
+        "value": "двухрежимный"
+      },
+      {
+        "id": 11,
+        "name": "Тип",
+        "value": "Подвесные_унитазы"
+      }
+    ]
+  }
+]
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+## Request Filters [/category/filters/7]
+This section of API returns all filters from particular category. 
+URL pattern of this request "/category/filters/{id}".
 
-+ Response 201 (application/json)
+### List Filters of Category [GET]
 
-    + Headers
++ Response 200 (application/json)
+[
+  {
+    "id": 6,
+    "name": "Материал",
+    "features": [
+      {
+        "id": 12,
+        "name": "Материал",
+        "value": "Дюропласт"
+      },
+      {
+        "id": 9,
+        "name": "Материал",
+        "value": "Фарфор"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Тип_переключения",
+    "features": [
+      {
+        "id": 10,
+        "name": "Тип_переключения",
+        "value": "двухрежимный"
+      },
+      {
+        "id": 7,
+        "name": "Тип_переключения",
+        "value": "двухрежимный"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Тип",
+    "features": [
+      {
+        "id": 11,
+        "name": "Тип",
+        "value": "Подвесные_унитазы"
+      },
+      {
+        "id": 8,
+        "name": "Тип",
+        "value": "Инсталляции"
+      }
+    ]
+  }
+]
 
-            Location: /questions/2
+## Request Product with Filters [/category/7/6=Фарфор&5=Инсталляции]
+This section of API returns all products from particular category with choosen filters. 
+URL pattern of this request "/category/{id}/{filter}".
 
-    + Body
+### List Products of Category with Filter on [GET]
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
++ Response 200 (application/json)
+[
+  {
+    "id": 3,
+    "name": "Компакт JUST 031",
+    "price": 28913,
+    "brand": "Cersanit",
+    "features": [
+      {
+        "id": 7,
+        "name": "Тип_переключения",
+        "value": "двухрежимный"
+      },
+      {
+        "id": 9,
+        "name": "Материал",
+        "value": "Фарфор"
+      },
+      {
+        "id": 8,
+        "name": "Тип",
+        "value": "Инсталляции"
+      }
+    ]
+  }
+]
