@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
-
+/*
+Этот класс используется как образ в Hibernate для таблицы "category" в БД.
+ */
 @Entity
 @Table(name = "category")
 @JsonFilter("categoryFilter")

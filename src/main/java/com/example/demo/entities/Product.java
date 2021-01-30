@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+/*
+Этот класс используется как образ в Hibernate для таблицы "product" в БД.
+ */
 @Entity
 @Table(name = "product")
 @JsonFilter("productFilter")

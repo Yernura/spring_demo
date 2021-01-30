@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-
+/*
+Этот класс используется как образ в Hibernate для таблицы "feature" в БД.
+ */
 @Entity
 @Table(name = "feature")
 public class Feature {

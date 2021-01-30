@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import javax.persistence.*;
 import java.util.Set;
 
+/*
+Этот класс используется как образ в Hibernate для таблицы "filter" в БД.
+ */
 @Entity
 @Table(name = "filter")
 @JsonFilter("filterFilter")
